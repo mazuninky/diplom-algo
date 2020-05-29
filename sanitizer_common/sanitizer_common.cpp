@@ -1,8 +1,12 @@
 #include "sanitizer_common.h"
 #include <iostream>
+#include <cstdarg>
 
 namespace __sanitizer {
-    static void Printf(const char *string) {
-        std::cout << string << std::endl;
+    void Printf(const char *format, ...) {
+        va_list(args_list);
+        va_start(args_list, format);
+        vprintf(format, args_list);
+        va_end(args_list);
     }
-}
+} // namespace __sanitizer

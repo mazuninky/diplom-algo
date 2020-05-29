@@ -3,13 +3,13 @@
 
 namespace __dd {
 
-    void PerformBeforeLock();
+    void PerformBeforeLock(int tid, unsigned long mutex_addr);
 
-    void PerformAfterLock();
+    void PerformAfterLock(int tid, unsigned long mutex_addr);
 
-    void PerformUnlock();
+    void PerformUnlock(int tid, unsigned long mutex_addr);
 
-    void PerformDestroy();
+    void PerformDestroy(unsigned long mutex_addr);
 }  // namespace __dd
 
 #endif  // DD_IMPROVED_H

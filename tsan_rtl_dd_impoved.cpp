@@ -3,19 +3,19 @@
 
 namespace __dd {
 
-    void PerformBeforeLock() {
-        __sanitizer::Printf("Lock\n");
+    void PerformBeforeLock(int tid, unsigned long mutex_addr) {
+        __sanitizer::Printf("[Before lock]Thread%d with mutex %zx\n", tid, mutex_addr);
     }
 
-    void PerformAfterLock() {
-
+    void PerformAfterLock(int tid, unsigned long mutex_addr) {
+        __sanitizer::Printf("[After lock]Thread%d with mutex %zx\n", tid, mutex_addr);
     }
 
-    void PerformUnlock() {
-
+    void PerformUnlock(int tid, unsigned long mutex_addr) {
+        __sanitizer::Printf("[Unlock]Thread%d with mutex %zx\n", tid, mutex_addr);
     }
 
-    void PerformDestroy() {
-
+    void PerformDestroy(unsigned long mutex_addr) {
+        __sanitizer::Printf("[Destroy]Mutex %zx\n", mutex_addr);
     }
-}
+} // namespace __dd
