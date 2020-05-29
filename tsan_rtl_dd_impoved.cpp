@@ -35,12 +35,12 @@ namespace __dd {
         auto it = find_if(locked.begin(), locked.end(),
                           [mutex_addr](const std::pair<int, vector<unsigned long>> &item) -> bool {
                               auto list = item.second;
-                              auto list_it = find_if(list.begin(), list.end(),
-                                                     [mutex_addr](unsigned long mutex) -> bool {
-                                                         return mutex == mutex_addr;
-                                                     });
-                              return list_it != list.end();
+                              return find_if(list.begin(), list.end(),
+                                             [mutex_addr](unsigned long mutex) -> bool {
+                                                 return mutex == mutex_addr;
+                                             }) != list.end();
                           });
+
         if (it == locked.end()) {
             __sanitizer::Printf("Illegal state\n");
             return;
@@ -81,5 +81,8 @@ namespace __dd {
 
     void PerformDestroyThread(int tid) {
         __sanitizer::Printf("[Destroy thread]Thread %d\n", tid);
+
+        locked.erase(tid);
+        request.erase(tid);
     }
 } // namespace __dd

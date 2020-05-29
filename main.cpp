@@ -28,12 +28,14 @@ void mutex_unlock(int tid, unsigned long mutex_addr) {
     __dd::PerformUnlock(tid, mutex_addr);
 }
 
-// T1: m1, m2, m3
-// T2: m3, m1
-int main() {
+/*
+ * Deadlock
+ * T1: m1, m2, m3
+ * T2: m3, m1
+ */
+void example1_deadlock() {
     auto t1 = create_thread();
     auto t2 = create_thread();
-
 
     auto m1 = create_mutex();
     auto m2 = create_mutex();
@@ -46,6 +48,9 @@ int main() {
     mutex_wait_lock(t1, m3);
 
     mutex_wait_lock(t2, m1); // <== Deadlock
+}
 
+int main() {
+    example1_deadlock();
     return 0;
 }
